@@ -1,0 +1,384 @@
+MAİN ACTİVİTY: 
+public class MainActivity extends AppCompatActivity {
+    EditText isim;
+    TextView soru1, soru2;
+    Spinner spinnercevap1, spinnercevap2;
+    Button digerekran;
+    RadioGroup cinsiyet;
+    RadioButton kadin, erkek;
+    String cevapbir = "";
+    String cevapiki = "";
+
+    public void init() {
+        isim = findViewById(R.id.isim);
+        soru1 = findViewById(R.id.soru1);
+        soru2 = findViewById(R.id.soru2);
+        spinnercevap1 = findViewById(R.id.spinnercevap1);
+        spinnercevap2 = findViewById(R.id.spinnercevap2);
+        digerekran = findViewById(R.id.digerekran);
+        cinsiyet = findViewById(R.id.cinsiyet);
+        kadin = findViewById(R.id.kadin);
+        erkek = findViewById(R.id.erkek);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        init();
+
+        digerekran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StringBuilder sonuc = new StringBuilder();
+                sonuc.append(isim.getText());
+                if (kadin.isChecked())
+                    sonuc.append("\nCinsiyetiniz kadın");
+                if (erkek.isChecked())
+                    sonuc.append("\nCinsiyetiniz Erkek");
+
+                String secilenislem = spinnercevap1.getSelectedItem().toString();
+                switch (secilenislem) {
+                    case "Çok kötü":
+                        sonuc.append("Çok Kötü");
+                        break;
+                    case "Kötü":
+                        sonuc.append("Kötü");
+                        break;
+                    case "Orta":
+                        sonuc.append("Orta");
+                        break;
+                    case "İyi":
+                        sonuc.append("İyi");
+                        break;
+                    case "Çok iyi":
+                        sonuc.append("Çok iyi");
+                        break;
+                }
+
+                String secilenislem2 = spinnercevap2.getSelectedItem().toString();
+                switch (secilenislem2) {
+                    case "Çok kötü":
+                        sonuc.append("Çok Kötü");
+                        break;
+                    case "Kötü":
+                        sonuc.append("Kötü");
+                        break;
+                    case "Orta":
+                        sonuc.append("Orta");
+                        break;
+                    case "İyi":
+                        sonuc.append("İyi");
+                        break;
+                    case "Çok iyi":
+                        sonuc.append("Çok iyi");
+                        break;
+                }
+
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                intent.putExtra("bilgi", (CharSequence) sonuc);
+                intent.putExtra("deger", secilenislem);
+                intent.putExtra("deger2", secilenislem2);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+}
+
+
+
+MAİNACTİVİTY SPLİT: 
+  <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/isim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="isim girin:"
+                android:inputType="textPersonName" />
+
+            <RadioGroup
+                android:id="@+id/cinsiyet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <RadioButton
+                    android:id="@+id/kadin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kadın" />
+
+                <RadioButton
+                    android:id="@+id/erkek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Erkek" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/soru1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Derslerinin durumu ne?"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnercevap1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/degerlendirme" />
+
+            <TextView
+                android:id="@+id/soru2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yabancı dil seviyen nasıl?"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnercevap2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/degerlendirme" />
+
+            <Button
+                android:id="@+id/digerekran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diğer Ekran" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+STRİNG.XML
+<string-array name="degerlendirme">
+        <item>Çok kötü</item>
+        <item>Kötü</item>
+        <item>Orta</item>
+        <item>İyi</item>
+        <item>Çok iyi</item>
+    </string-array>
+
+MAİNACTİVİTY2:
+public class MainActivity2 extends AppCompatActivity {
+    EditText boy, kilo;
+    Button hesapla, temizle;
+    TextView textView, hesap;
+    double vki = 0;
+
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        boy = findViewById(R.id.boy);
+        kilo = findViewById(R.id.kilo);
+        hesapla = findViewById(R.id.hesapla);
+        textView = findViewById(R.id.textView);
+        hesap = findViewById(R.id.hesap);
+        temizle = findViewById(R.id.temizle);
+
+        Bundle bundle = getIntent().getExtras();
+        String gelenAd = bundle.getString("bilgi");
+        String gelenislem = bundle.getString("deger");
+        String gelenislem2 = bundle.getString("deger2");
+        textView.setText("Adınız: " + gelenAd + "\n1.soru: " + gelenislem + "\n2.soru: " + gelenislem2);
+
+
+        hesapla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                double boyu = Double.parseDouble(boy.getText().toString());
+                int kilosu = Integer.parseInt(kilo.getText().toString());
+                vki = kilosu / boyu * boyu;
+
+                if (vki < 18.5)
+                    hesap.setText(vki + " Zayıf");
+                else if (vki < 24.9)
+                    hesap.setText(vki + " Normal");
+                else if (vki < 29.9)
+                    hesap.setText(vki + " Fazla Kilolu");
+                else if (vki < 34.9)
+                    hesap.setText(vki + " Obez");
+                else if (vki < 39.9)
+                    hesap.setText(vki + " Obez");
+                else if (vki < 40)
+                    hesap.setText(vki + " Süper Obez");
+                else
+                    hesap.setText("Yanlış değer");
+
+            }
+        });
+
+        temizle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boy.setText(null);
+                kilo.setText(null);
+                hesap.setText(" ");
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.renk1:
+                hesap.setBackgroundColor(Color.RED);
+                break;
+
+            case R.id.renk2:
+                hesap.setBackgroundColor(Color.GREEN);
+                break;
+
+            case R.id.renk3:
+                hesap.setBackgroundColor(Color.BLUE);
+                break;
+
+            case R.id.renk4:
+                hesap.setBackgroundColor(Color.YELLOW);
+                break;
+
+        }
+
+        return true;
+    }
+}
+
+MAİNACTİVİTY2 SPLİT:
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/boy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="boyunuzu giriniz: "
+        android:inputType="numberDecimal"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/kilo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="kilonuzu giriniz:"
+        android:inputType="number"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boy" />
+
+    <Button
+        android:id="@+id/hesapla"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Hesapla"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kilo" />
+
+    <TextView
+        android:id="@+id/hesap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Hesap"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hesapla" />
+
+    <Button
+        android:id="@+id/temizle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Temizle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hesap" />
+
+
+OPTİON MENU:
+
+    <item
+        android:id="@+id/renk1"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:title="Kırmızı" />
+    <item
+        android:id="@+id/renk2"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:title="Yeşil" />
+    <item
+        android:id="@+id/renk3"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:title="Mavi" />
+    <item
+        android:id="@+id/renk4"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:title="Sarı" />
+</menu>
